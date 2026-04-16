@@ -1,0 +1,21 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: dev
+  namespace: guestbook
+spec:
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: guestbook
+    sources:
+      direct: true
+  promotionTemplate:
+    spec:
+      steps:
+      - uses: argocd-update
+        config:
+          apps:
+          - name: guestbook-dev
+            sources:
+            - repoURL: https://github.com/argoproj/argocd-example-apps
