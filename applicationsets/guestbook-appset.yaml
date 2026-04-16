@@ -12,6 +12,8 @@ spec:
   template:
     metadata:
       name: 'guestbook-{{env}}'
+      annotations:
+        kargo.akuity.io/authorized-stage: 'guestbook:*'
     spec:
       project: default
       source:
