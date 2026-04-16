@@ -20,14 +20,14 @@ Single local Kubernetes cluster running via Rancher Desktop, connected to an Aku
 ## How it's wired together
 
 ### Argo CD
-The guestbook app (classic for a reason) gets deployed across three namespaces — guestbook-dev, guestbook-staging, and guestbook-prod — via a single ApplicationSet using a List generator. 
+The guestbook app (classic for a reason) gets deployed across three namespaces: guestbook-dev, guestbook-staging, and guestbook-prod via a single ApplicationSet using a List generator. 
 
 The reason I went with ApplicationSet instead of three separate Application manifests is simple: if you ever need a fourth environment, you add one line. That's the kind of thing that makes platform teams happy at 2am.
 
 Each app carries a kargo.akuity.io/authorized-stage annotation so Kargo has permission to trigger syncs. Learned that one the hard way.
 
 ### Kargo
-A Warehouse subscribes to ghcr.io/akuity/guestbook and discovers new image versions as freight. Three stages sit downstream — dev, staging, prod — each one only accepting freight that survived the previous stage.
+A Warehouse subscribes to ghcr.io/akuity/guestbook and discovers new image versions as freight. Three stages sit downstream: dev, staging, prod. Each one only accepting freight that survived the previous stage.
 
 Dev auto-promotes because fast feedback loops matter. Staging and prod require a human to click the button, because some decisions shouldn't be automated.
 
